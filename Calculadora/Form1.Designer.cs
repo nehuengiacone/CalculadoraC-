@@ -64,6 +64,7 @@
             ButtonPorc.TabIndex = 0;
             ButtonPorc.Text = "%";
             ButtonPorc.UseVisualStyleBackColor = false;
+            ButtonPorc.Click += ButtonPorc_Click;
             // 
             // TextBoxOperation
             // 
@@ -91,6 +92,7 @@
             ButtonMod.TabIndex = 2;
             ButtonMod.Text = "MOD";
             ButtonMod.UseVisualStyleBackColor = false;
+            ButtonMod.Click += ButtonMod_Click;
             // 
             // ButtonCE
             // 

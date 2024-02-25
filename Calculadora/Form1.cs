@@ -33,50 +33,62 @@ namespace Calculadora
         //deteccion de operacion
         private decimal DetectOperation(string symbol, decimal result, string operation = "")
         {
-            switch (symbol)
+
+            try
             {
-                case "+":
-                    result = Convert.ToDecimal(listNumber[0]) + Convert.ToDecimal(listNumber[1]);
-                    textBoxParcial.Text = "";
-                    TextBoxOperation.Text = Convert.ToString(result);
-                    listNumber.Clear();
-                    break;
-                case "-":
-                    result = Convert.ToDecimal(listNumber[0]) - Convert.ToDecimal(listNumber[1]);
-                    textBoxParcial.Text = "";
-                    TextBoxOperation.Text = Convert.ToString(result);
-                    listNumber.Clear();
-                    break;
-                case "X":
-                    result = Convert.ToDecimal(listNumber[0]) * Convert.ToDecimal(listNumber[1]);
-                    textBoxParcial.Text = "";
-                    TextBoxOperation.Text = Convert.ToString(result);
-                    listNumber.Clear();
-                    break;
-                case "/":
-                    try
-                    {
+                switch (symbol)
+                {
+                    case "+":
+                        result = Convert.ToDecimal(listNumber[0]) + Convert.ToDecimal(listNumber[1]);
+                        textBoxParcial.Text = "";
+                        TextBoxOperation.Text = Convert.ToString(result);
+                        listNumber.Clear();
+                        break;
+                    case "-":
+                        result = Convert.ToDecimal(listNumber[0]) - Convert.ToDecimal(listNumber[1]);
+                        textBoxParcial.Text = "";
+                        TextBoxOperation.Text = Convert.ToString(result);
+                        listNumber.Clear();
+                        break;
+                    case "X":
+                        result = Convert.ToDecimal(listNumber[0]) * Convert.ToDecimal(listNumber[1]);
+                        textBoxParcial.Text = "";
+                        TextBoxOperation.Text = Convert.ToString(result);
+                        listNumber.Clear();
+                        break;
+                    case "/":
                         result = Convert.ToDecimal(listNumber[0]) / Convert.ToDecimal(listNumber[1]);
                         textBoxParcial.Text = "";
                         TextBoxOperation.Text = Convert.ToString(result);
                         listNumber.Clear();
-                    }  
-                    catch(Exception e) 
-                    {
-                        MessageBox.Show(e.Message, "Ocurrio un fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        TextBoxOperation.Font = new Font("Segoe UI", 15F);
-                        TextBoxOperation.Text = e.Message;
+                        break;
+                    case "%":
+                        result = (Convert.ToDecimal(listNumber[0]) * Convert.ToDecimal(listNumber[1])) / 100;
                         textBoxParcial.Text = "";
+                        TextBoxOperation.Text = Convert.ToString(result);
                         listNumber.Clear();
-                        LockButtons(true);
-                    }
-                    break;
-                case "%":
-                    break;
-                case "=":
-                    DetectOperation(operation, result);
-                    listOperation.Clear();
-                    break;
+                        break;
+                    case "MOD":
+                        result = Convert.ToDecimal(listNumber[0]) % Convert.ToDecimal(listNumber[1]);
+                        textBoxParcial.Text = "";
+                        TextBoxOperation.Text = Convert.ToString(result);
+                        listNumber.Clear();
+                        break;
+                    case "=":
+                        DetectOperation(operation, result);
+                        listOperation.Clear();
+                        break;
+                }
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Ocurrio un fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TextBoxOperation.Font = new Font("Segoe UI", 10.0F);
+                TextBoxOperation.Text = e.Message;
+                textBoxParcial.Text = "";
+                listNumber.Clear();
+                LockButtons(true);
             }
 
             return result;
@@ -165,15 +177,28 @@ namespace Calculadora
             listNumber.Add(number);
             listOperation.Add(operation);
 
-            if (listNumber.Count == 2)
+            try
             {
-                result = DetectOperation(operation, result);
+                if (listNumber.Count == 2)
+                {
+                    result = DetectOperation(operation, result);
+                }
+                else
+                {
+                    result = Convert.ToDecimal(listNumber[0]) + 0;
+                    textBoxParcial.Text = Convert.ToString(result);
+                    TextBoxOperation.Text = "0";
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                result = Convert.ToDecimal(listNumber[0]) + 0;
-                textBoxParcial.Text = Convert.ToString(result);
-                TextBoxOperation.Text = "0";
+                MessageBox.Show(ex.Message, "Ocurrio un fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TextBoxOperation.Font = new Font("Segoe UI", 10.0F);
+                TextBoxOperation.Text = ex.Message;
+                textBoxParcial.Text = "";
+                listNumber.Clear();
+                LockButtons(true);
             }
         }
 
@@ -234,17 +259,30 @@ namespace Calculadora
             string number = TextBoxOperation.Text;
             listNumber.Add(number);
 
-            if (listNumber.Count == 2 && listOperation.Count == 1)
+            try
             {
-                result = DetectOperation(operation, result, listOperation[0]);
+                if (listNumber.Count == 2 && listOperation.Count == 1)
+                {
+                    result = DetectOperation(operation, result, listOperation[0]);
 
+                }
+                else
+                {
+                    result = Convert.ToDecimal(listNumber[0]) + 0;
+                    textBoxParcial.Text = Convert.ToString(result);
+                    TextBoxOperation.Text = Convert.ToString(result); ;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                result = Convert.ToDecimal(listNumber[0]) + 0;
-                textBoxParcial.Text = Convert.ToString(result);
-                TextBoxOperation.Text = Convert.ToString(result); ;
+                MessageBox.Show(ex.Message, "Ocurrio un fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TextBoxOperation.Font = new Font("Segoe UI", 10.0F);
+                TextBoxOperation.Text = ex.Message;
+                textBoxParcial.Text = "";
+                listNumber.Clear();
+                LockButtons(true);
             }
+
         }
 
         private void ButtonDiv_Click(object sender, EventArgs e)
@@ -263,6 +301,70 @@ namespace Calculadora
                 result = Convert.ToDecimal(listNumber[0]) + 0;
                 textBoxParcial.Text = Convert.ToString(result);
                 TextBoxOperation.Text = "0";
+            }
+        }
+
+        private void ButtonMod_Click(object sender, EventArgs e)
+        {
+            string operation = "MOD";
+            string number = TextBoxOperation.Text;
+            listNumber.Add(number);
+            listOperation.Add(operation);
+
+            try
+            {
+                if (listNumber.Count == 2)
+                {
+                    result = DetectOperation(operation, result);
+                }
+                else
+                {
+                    result = Convert.ToDecimal(listNumber[0]) + 0;
+                    textBoxParcial.Text = Convert.ToString(result);
+                    TextBoxOperation.Text = "0";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ocurrio un fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TextBoxOperation.Font = new Font("Segoe UI", 10.0F);
+                TextBoxOperation.Text = ex.Message;
+                textBoxParcial.Text = "";
+                listNumber.Clear();
+                LockButtons(true);
+            }
+        }
+
+        private void ButtonPorc_Click(object sender, EventArgs e)
+        {
+            string operation = "%";
+            string number = TextBoxOperation.Text;
+            listNumber.Add(number);
+            listOperation.Add(operation);
+
+            try
+            {
+                if (listNumber.Count == 2)
+                {
+                    result = DetectOperation(operation, result);
+                }
+                else
+                {
+                    result = Convert.ToDecimal(listNumber[0]) + 0;
+                    textBoxParcial.Text = Convert.ToString(result);
+                    TextBoxOperation.Text = "0";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ocurrio un fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TextBoxOperation.Font = new Font("Segoe UI", 10.0F);
+                TextBoxOperation.Text = ex.Message;
+                textBoxParcial.Text = "";
+                listNumber.Clear();
+                LockButtons(true);
             }
         }
     }
