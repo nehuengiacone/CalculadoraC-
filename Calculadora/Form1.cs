@@ -43,36 +43,42 @@ namespace Calculadora
                         textBoxParcial.Text = "";
                         TextBoxOperation.Text = Convert.ToString(result);
                         listNumber.Clear();
+                        listOperation.Clear();
                         break;
                     case "-":
                         result = Convert.ToDecimal(listNumber[0]) - Convert.ToDecimal(listNumber[1]);
                         textBoxParcial.Text = "";
                         TextBoxOperation.Text = Convert.ToString(result);
                         listNumber.Clear();
+                        listOperation.Clear();
                         break;
                     case "X":
                         result = Convert.ToDecimal(listNumber[0]) * Convert.ToDecimal(listNumber[1]);
                         textBoxParcial.Text = "";
                         TextBoxOperation.Text = Convert.ToString(result);
                         listNumber.Clear();
+                        listOperation.Clear();
                         break;
                     case "/":
                         result = Convert.ToDecimal(listNumber[0]) / Convert.ToDecimal(listNumber[1]);
                         textBoxParcial.Text = "";
                         TextBoxOperation.Text = Convert.ToString(result);
                         listNumber.Clear();
+                        listOperation.Clear();
                         break;
                     case "%":
                         result = (Convert.ToDecimal(listNumber[0]) * Convert.ToDecimal(listNumber[1])) / 100;
                         textBoxParcial.Text = "";
                         TextBoxOperation.Text = Convert.ToString(result);
                         listNumber.Clear();
+                        listOperation.Clear();
                         break;
                     case "MOD":
                         result = Convert.ToDecimal(listNumber[0]) % Convert.ToDecimal(listNumber[1]);
                         textBoxParcial.Text = "";
                         TextBoxOperation.Text = Convert.ToString(result);
                         listNumber.Clear();
+                        listOperation.Clear();
                         break;
                     case "=":
                         DetectOperation(operation, result);
