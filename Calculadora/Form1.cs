@@ -173,6 +173,11 @@ namespace Calculadora
             firstNumber(ButtonNum0.Text);
         }
 
+        private void ButtonDot_Click(object sender, EventArgs e)
+        {
+            TextBoxOperation.Text = TextBoxOperation.Text.Contains('.') ? TextBoxOperation.Text : TextBoxOperation.Text += ButtonDot.Text;
+        }
+
         //eventos de click en operaciones
 
         //suma

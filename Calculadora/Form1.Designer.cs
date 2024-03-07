@@ -294,6 +294,7 @@
             ButtonDot.Text = ".";
             ButtonDot.UseMnemonic = false;
             ButtonDot.UseVisualStyleBackColor = true;
+            ButtonDot.Click += ButtonDot_Click;
             // 
             // textBoxParcial
             // 
